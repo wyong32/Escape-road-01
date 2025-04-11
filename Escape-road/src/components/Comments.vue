@@ -78,7 +78,7 @@ const props = defineProps({
 
 // 后端 API 地址 (确保与你的后端服务地址和端口一致)
 // !!! 注意：生产环境部署时需要修改为你的后端服务实际地址 !!!
-const API_URL = 'http://localhost:3000/api/comments';
+const API_URL = '/api/comments'; // 使用相对路径
 
 // 响应式状态
 const comments = ref([]);

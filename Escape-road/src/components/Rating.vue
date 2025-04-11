@@ -47,7 +47,7 @@ const props = defineProps({
 });
 
 // !!! 与 Comments.vue 一致，生产环境需修改 !!!
-const API_URL = 'http://localhost:3000/api/ratings';
+const API_URL = '/api/ratings';
 
 const averageRating = ref(null);
 const ratingCount = ref(0);
