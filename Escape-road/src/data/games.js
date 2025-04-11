@@ -3,7 +3,7 @@ export const games = {
         id: 'game1',
         title: 'Escape Road -escape road game -escape road online',
         description: 'Escape Road is an exciting car chase adventure game where every second counts. Drive the car, dodge obstacles and escape the relentless police pursuit during the chase.', // 游戏描述
-        keywords: 'escape road,escape road 2,escape road city,escape road game,escape road online', // 新增关键词
+        keywords: 'escape road,Escape Road 2 ,escape road city,escape road game,escape road online', // 新增关键词
         addressBar: "Escape-Road",
         logoText: "Escape Road",
         image: 'game-01.webp',
@@ -50,37 +50,37 @@ export const games = {
     },
     game2: {
         id: 'game2',
-        title: 'Escape Road 2 -escape road 2 game -escape road 2 online',
-        description: 'Escape Road 2 is an exciting car chase adventure game where every second counts. Drive the car, dodge obstacles and escape the relentless police pursuit during the chase.', // 游戏描述
-        keywords: 'escape road,escape road 2,escape road city,escape road game,escape road online', // 新增关键词
-        addressBar: "Escape-Road-2",
-        logoText: "Escape Road-2",
+        title: 'Escape Road 2  -Escape Road 2  game -Escape Road 2  online',
+        description: 'Escape Road 2  is an exciting car chase adventure game where every second counts. Drive the car, dodge obstacles and escape the relentless police pursuit during the chase.', // 游戏描述
+        keywords: 'escape road,Escape Road 2  ,escape road city,escape road game,escape road online', // 新增关键词
+        addressBar: "Escape-Road-2 ",
+        logoText: "Escape Road-2 ",
         image: 'game-02.webp',
         iframeUrl: 'https://1games.io/game/escape-road-2/',
         location: "left",
         showHeader: true,
         // background: 'linear-gradient(135deg,rgb(157, 0, 248) 0%,rgb(0, 236, 71) 100%)',
         aboutContent: `
-            <h2>Escape Road 2 ​​: Game Guide & Key Highlights</h2>
-            <p>Experience the next level of high-speed survival with Escape Road 2—a heart-pounding reimagining of the iconic chase franchise. This time, the stakes are higher, the enemies deadlier, and your freedom is more electrifying than ever.</p>
-            <h3>How to play Escape Road 2？</h3>
-            <h4>Escape Road 2 Revolutionary Gameplay​​</h4>
+            <h2>Escape Road 2  ​​: Game Guide & Key Highlights</h2>
+            <p>Experience the next level of high-speed survival with Escape Road 2 —a heart-pounding reimagining of the iconic chase franchise. This time, the stakes are higher, the enemies deadlier, and your freedom is more electrifying than ever.</p>
+            <h3>How to play Escape Road 2 ？</h3>
+            <h4>Escape Road 2  Revolutionary Gameplay​​</h4>
             <p><strong>Freedom on the Move:</strong> Ditch your car mid-chase, dive into rivers, or commandeer new vehicles to outsmart pursuers.</p>
             <p><strong>Adaptive Enemies:</strong> Outrun smarter cops armed with advanced tactics, high-tech gadgets, and relentless aggression. New threats—armed mercenaries and extraterrestrial hunters—will test your survival skills like never before.</p>
             <p><strong>Dynamic Environments:</strong> Use cityscapes, traffic chaos, and hidden shortcuts to stay ahead in unpredictable, edge-of-your-seat chases.</p>
             <p><strong>Core Objective:</strong> Survive. Evade. Escape. Master precision drifting, strategic vehicle swaps, and daring terrain leaps as you outrun increasingly lethal adversaries. Every decision matters—misjudge a turn, and the chase ends here.</p>
-            <h3>Escape Road 2  Features</h3>
+            <h3>Escape Road 2   Features</h3>
             <p><strong>Procedural Chase Scenarios​​:</strong> No two escapes are the same, with AI opponents that learn from your moves.</p>
             <p><strong>Multi-Terrain Mayhem​​:</strong> Shift from neon-lit highways to flooded tunnels and alien-infested zones.</p>
             <p><strong>Upgrade Your Arsenal​​:</strong> Unlock gadgets like EMP devices, smoke screens, and grappling hooks to turn the tide.</p>
-            <h3>How to Controls Escape Road 2:</h3>
+            <h3>How to Controls Escape Road 2 :</h3>
             <p>A/D: Start.<br/> Up or W keys: Accelerate.<br/> Down or S keys : Reverse.<br/>  Arrow or A/D keys: Turn.</p>
-            <h3>Are You Ready to Break Free in Escape Road 2?​​​</h3>
-            <p>Enter Escape Road 2 - every second is a gamble and only the bravest will make it out alive. Get your adrenaline pumping with the relentless, thrilling Escape Road 2 now. Escape Road 2 is free to play athttps://escape-road-online.com .</p>
-            <p>About Escape Road 2
-Escape Road 2 is a heart-pounding racing game where players must control their cars to outrun the police and escape their relentless pursuit. A multitude of vehicles, including police cars, cars, jeeps, and helicopters, are actively pursuing you. Your mission is to drive continuously and escape as fast as possible without being caught.
+            <h3>Are You Ready to Break Free in Escape Road 2 ?​​​</h3>
+            <p>Enter Escape Road 2  - every second is a gamble and only the bravest will make it out alive. Get your adrenaline pumping with the relentless, thrilling Escape Road 2  now. Escape Road 2  is free to play athttps://escape-road-online.com .</p>
+            <p>About Escape Road 2 
+Escape Road 2  is a heart-pounding racing game where players must control their cars to outrun the police and escape their relentless pursuit. A multitude of vehicles, including police cars, cars, jeeps, and helicopters, are actively pursuing you. Your mission is to drive continuously and escape as fast as possible without being caught.
 
-How to play Escape Road 2
+How to play Escape Road 2 
 Escape Road has come back with a sequel! In this installment, you'll encounter a variety of challenges from the outset as you prepare to operate a stolen vehicle under police pursuit. Your objective is to drive as far as possible without crashing or attracting the police's attention. 
 
 You will encounter countless obstacles, such as trees, buildings, and traffic on the road. Avoid obstacles so as not to hinder your progress.
