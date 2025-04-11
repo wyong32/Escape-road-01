@@ -8,7 +8,7 @@
       <nav class="header-nav">
         <ul>
           <li v-for="game in headerGames" :key="game.id">
-            <router-link :to="'/' + game.addressBar">{{ game.addressBar }}</router-link>
+            <router-link :to="'/' + game.addressBar">{{ game.logoText }}</router-link>
           </li>
         </ul>
       </nav>
@@ -51,7 +51,7 @@ const headerGames = computed(() => {
     .map(game => ({
       id: game.id,
       title: game.title,
-      addressBar: game.addressBar
+      logoText: game.logoText
     }));
 });
 
