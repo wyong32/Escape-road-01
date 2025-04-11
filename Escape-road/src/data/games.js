@@ -77,19 +77,6 @@ export const games = {
             <p>A/D: Start.<br/> Up or W keys: Accelerate.<br/> Down or S keys : Reverse.<br/>  Arrow or A/D keys: Turn.</p>
             <h3>Are You Ready to Break Free in Escape Road 2 ?​​​</h3>
             <p>Enter Escape Road 2  - every second is a gamble and only the bravest will make it out alive. Get your adrenaline pumping with the relentless, thrilling Escape Road 2  now. Escape Road 2  is free to play athttps://escape-road-online.com .</p>
-            <p>About Escape Road 2 
-Escape Road 2  is a heart-pounding racing game where players must control their cars to outrun the police and escape their relentless pursuit. A multitude of vehicles, including police cars, cars, jeeps, and helicopters, are actively pursuing you. Your mission is to drive continuously and escape as fast as possible without being caught.
-
-How to play Escape Road 2 
-Escape Road has come back with a sequel! In this installment, you'll encounter a variety of challenges from the outset as you prepare to operate a stolen vehicle under police pursuit. Your objective is to drive as far as possible without crashing or attracting the police's attention. 
-
-You will encounter countless obstacles, such as trees, buildings, and traffic on the road. Avoid obstacles so as not to hinder your progress.
-
-Along the way, you will see money scattered on the road. Try to collect as much money as possible to improve your vehicle and speed it up.  You have a better chance of getting away from the police if you get more money.
-
-The longer you run, the more powerful and faster vehicles the police will send to catch you, including jeeps, cars, and helicopters. Therefore, to survive longer, you should unlock and upgrade powerful cars with improved engines and handling. Stay calm and use your driving skills to pass them. 
-
-What awaits you in this sequel? More unlockable cars, new challenges, environments, and features!</p>
         `
     },
     game3: {

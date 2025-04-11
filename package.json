@@ -7,7 +7,7 @@
     "node": "18.x"
   },
   "scripts": {
-    "dev:frontend": "cd Escape-road && npm run dev",
+    "dev:frontend": "cd Escape-road && vite",
     "build:frontend": "cd Escape-road && npm run build",
     "preview:frontend": "cd Escape-road && npm run preview",
     "lint:frontend": "cd Escape-road && npm run lint",

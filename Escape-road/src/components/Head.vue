@@ -51,6 +51,7 @@ const headerGames = computed(() => {
     .map(game => ({
       id: game.id,
       title: game.title,
+      addressBar: game.addressBar,
       logoText: game.logoText
     }));
 });
