@@ -14,7 +14,8 @@
     "format:frontend": "cd Escape-road && npm run format",
     "test:frontend": "cd Escape-road && npm run test:unit",
     "dev:backend": "nodemon api/index.js",
-    "build": "npm run build:frontend"
+    "build": "npm run build:frontend",
+    "dev": "vercel dev"
   },
   "dependencies": {
     "@vercel/kv": "^3.0.0",
