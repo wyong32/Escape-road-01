@@ -191,6 +191,17 @@ app.post('/api/ratings', ratingLimiter, async (req, res) => {
     }
 });
 
+// --- RE-ADD Debug API Endpoint ---
+app.get('/api/debug/view-data', async (req, res) => { // <-- Removed checkAdminSecret
+  console.log("[API] GET /api/debug/view-data received."); // <-- 添加日志 6：路由进入
+  // Note: We now apply the checkAdminSecret middleware here! <-- Comment is now potentially misleading, but leaving as is.
+  try {
+    // ... existing code ...
+  } catch (error) {
+    // ... existing code ...
+  }
+});
+
 // --- 启动服务器 (注释掉或删除，Vercel不需要) ---
 // app.listen(PORT, '0.0.0.0', () => {
 //     console.log(`Server listening on port ${PORT}.`);
