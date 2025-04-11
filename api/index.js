@@ -29,16 +29,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// --- RE-ADD Password Check Middleware ---
-const checkAdminSecret = (req, res, next) => {
-    const secret = req.query.secret;
-    const expectedSecret = 'wanghuan'; 
-    if (secret !== expectedSecret) {
-        return res.status(403).send('Forbidden: Invalid secret');
-    }
-    next(); 
-};
-
 // --- Rate Limiters (Keep these) ---
 const keyGenerator = (req /*, res */) => {
     const pageId = req.body?.pageId || req.query.pageId || 'unknown_page'; // 尝试从 body 或 query 获取 pageId
@@ -198,18 +188,6 @@ app.post('/api/ratings', ratingLimiter, async (req, res) => {
     } catch (error) {
         console.error('Error submitting rating to Vercel KV:', error);
         res.status(500).send('Error submitting rating');
-    }
-});
-
-// --- RE-ADD Debug API Endpoint ---
-app.get('/api/debug/view-data', checkAdminSecret, async (req, res) => {
-    console.log("[API] GET /api/debug/view-data received."); // <-- 添加日志 6: 路由进入
-    // Note: We now apply the checkAdminSecret middleware here!
-    try {
-        res.json({ message: "Debug endpoint active. Fetching specific KV data requires implementation." });
-    } catch (error) {
-        console.error("Error in debug endpoint accessing Vercel KV:", error);
-        res.status(500).send("Error accessing debug data");
     }
 });
 
