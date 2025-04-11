@@ -206,8 +206,10 @@ app.get('/api/debug/view-data', checkAdminSecret, async (req, res) => {
     }
 });
 
-// --- 启动服务器 (Keep this) ---
-app.listen(PORT, '0.0.0.0', () => { // 确保监听 0.0.0.0 以便外部访问
-    console.log(`Server listening on port ${PORT}. Access it from other devices at http://<your-local-ip>:${PORT}`);
-    // 不再需要检查 data.json 文件
-});
+// --- 启动服务器 (注释掉或删除，Vercel不需要) ---
+// app.listen(PORT, '0.0.0.0', () => {
+//     console.log(`Server listening on port ${PORT}.`);
+// });
+
+// 添加导出语句，以便 Vercel 可以导入 app
+export default app;
