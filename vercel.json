@@ -1,4 +1,15 @@
 {
+    "functions": {
+      "api/server.js": {
+        "memory": 1024 
+      }
+    },
+    "routes": [
+      {
+        "src": "/api/(.*)",
+        "dest": "/api/server.js"
+      }
+    ],
     "rewrites": [
       {
         "source": "/((?!api/|_next/|favicon.ico|.*\\.).*)",
