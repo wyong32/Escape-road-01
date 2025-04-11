@@ -3,6 +3,8 @@ import cors from "cors";
 import express from "express";
 import rateLimit from "express-rate-limit";
 
+console.log("[API] server.js loaded successfully."); // <-- 添加日志 1: 文件加载
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -90,6 +92,7 @@ const calculateRatingStats = (ratingCounts) => {
 
 // GET /api/comments?pageId=xxx
 app.get('/api/comments', async (req, res) => {
+    console.log(`[API] GET /api/comments received for pageId: ${req.query.pageId}`); // <-- 添加日志 2: 路由进入
     const pageId = req.query.pageId;
     if (!pageId) {
         return res.status(400).json({ message: 'pageId is required' });
@@ -111,6 +114,7 @@ app.get('/api/comments', async (req, res) => {
 
 // POST /api/comments
 app.post('/api/comments', commentLimiter, async (req, res) => {
+    console.log(`[API] POST /api/comments received for pageId: ${req.body.pageId}`); // <-- 添加日志 3: 路由进入
     // 不再需要 email，移除相关验证
     const { pageId, name, text } = req.body;
 
@@ -155,6 +159,7 @@ app.post('/api/comments', commentLimiter, async (req, res) => {
 
 // GET /api/ratings?pageId=xxx
 app.get('/api/ratings', async (req, res) => {
+    console.log(`[API] GET /api/ratings received for pageId: ${req.query.pageId}`); // <-- 添加日志 4: 路由进入
     const pageId = req.query.pageId;
     if (!pageId) {
         return res.status(400).json({ message: 'pageId is required' });
@@ -173,6 +178,7 @@ app.get('/api/ratings', async (req, res) => {
 
 // POST /api/ratings 
 app.post('/api/ratings', ratingLimiter, async (req, res) => { 
+    console.log(`[API] POST /api/ratings received for pageId: ${req.body.pageId}`); // <-- 添加日志 5: 路由进入
     const { pageId, rating } = req.body; 
     if (!pageId || typeof rating !== 'number' || rating < 1 || rating > 5) {
         return res.status(400).send('pageId and a rating (1-5) are required.');
@@ -197,6 +203,7 @@ app.post('/api/ratings', ratingLimiter, async (req, res) => {
 
 // --- RE-ADD Debug API Endpoint ---
 app.get('/api/debug/view-data', checkAdminSecret, async (req, res) => {
+    console.log("[API] GET /api/debug/view-data received."); // <-- 添加日志 6: 路由进入
     // Note: We now apply the checkAdminSecret middleware here!
     try {
         res.json({ message: "Debug endpoint active. Fetching specific KV data requires implementation." });
