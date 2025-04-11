@@ -54,7 +54,7 @@ export const games = {
         description: 'Escape Road 2  is an exciting car chase adventure game where every second counts. Drive the car, dodge obstacles and escape the relentless police pursuit during the chase.', // 游戏描述
         keywords: 'escape road,Escape Road 2  ,escape road city,escape road game,escape road online', // 新增关键词
         addressBar: "Escape-Road-2 ",
-        logoText: "Escape Road-2 ",
+        logoText: "Escape Road 2 ",
         image: 'game-02.webp',
         iframeUrl: 'https://1games.io/game/escape-road-2/',
         location: "left",
