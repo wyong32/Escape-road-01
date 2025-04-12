@@ -33,3 +33,6 @@ coverage
 
 # Windows 缩略图缓存
 Thumbs.db
+
+# TypeScript build info
+*.tsbuildinfo

@@ -174,17 +174,29 @@ app.get('/api/comments', getLimiter, async (req, res) => {
     // console.log("--- [SIMPLIFIED TEST] Dummy response sent --- ");
 });
 
-// POST /api/comments (Improved ID generation)
+// POST /api/comments (Improved ID generation, added email)
 app.post('/api/comments', commentLimiter, async (req, res) => {
-    const { pageId, name, text } = req.body;
+    const { pageId, name, text, email } = req.body; // Destructure email
 
-    // --- Input Validation (Keep as is) ---
+    // --- Input Validation (Keep as is, add email validation) ---
     const pageIdError = validateInput(pageId, 'Page ID');
     if (pageIdError) return res.status(400).json({ message: pageIdError });
     const nameError = validateInput(name, 'Name', 100);
     if (nameError) return res.status(400).json({ message: nameError });
     const textError = validateInput(text, 'Comment', 500);
     if (textError) return res.status(400).json({ message: textError });
+
+    // Basic email validation (check if exists and contains '@')
+    // For more robust validation, consider using a library like validator.js
+    if (email && typeof email === 'string') {
+        if (!email.includes('@') || email.trim().length > 254) { // Simple check
+            return res.status(400).json({ message: 'Please provide a valid email address.' });
+        }
+    } else if (email) { // Handle cases where email is present but not a string
+         return res.status(400).json({ message: 'Email must be a string.' });
+    }
+    // If email is not provided (null/undefined), we allow it (optional field)
+
     // --- Validation End ---
 
     console.log(`[API] POST /api/comments received for pageId: ${pageId}`);
@@ -193,6 +205,8 @@ app.post('/api/comments', commentLimiter, async (req, res) => {
         id: Date.now().toString() + Math.random().toString(16).slice(2),
         name: name.trim(),
         text: text.trim(),
+        // Add email only if it was provided and is a non-empty string after trimming
+        ...(email && typeof email === 'string' && email.trim() && { email: email.trim() }),
         timestamp: new Date().toISOString()
     };
 
