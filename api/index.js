@@ -107,45 +107,65 @@ app.get('/api/comments', getLimiter, async (req, res) => {
         return res.status(400).json({ message: 'Valid pageId query parameter is required.' });
     }
 
-    // --- Original KV Logic (Restored) ---
+    // --- Original KV Logic (Restored & Adjusted for pre-parsed objects) ---
     try {
-        const commentsJson = await kv.lrange(`comments:${pageId}`, 0, -1);
-        console.log(`[API] Fetched ${commentsJson.length} raw comment strings for ${pageId}`); // Added log for raw count
+        // kv.lrange might return strings or pre-parsed objects depending on KV behavior
+        const rawDataList = await kv.lrange(`comments:${pageId}`, 0, -1);
+        console.log(`[API] Fetched ${rawDataList.length} raw data items for ${pageId}`); // Log raw count
 
-        const comments = commentsJson.map((commentStr, index) => {
-            // Clean the string first: remove potential BOM and trim whitespace
-            const cleanedStr = typeof commentStr === 'string' 
-                ? commentStr.trim().replace(/^\uFEFF/, '') 
-                : ''; // Handle non-string values defensively
-            
-            if (!cleanedStr) {
-                 console.warn(`[API] Empty or non-string data found at index ${index} for pageId ${pageId}. Original:`, commentStr);
-                 return null; // Skip empty or non-string entries
-            }
-            
+        const comments = rawDataList.map((rawData, index) => {
+            let comment = null;
             try {
-                // Attempt to parse the cleaned JSON string
-                const comment = JSON.parse(cleanedStr);
-                // Basic validation: check if it has id AND text
+                // Check if rawData is already an object (likely pre-parsed by @vercel/kv)
+                if (typeof rawData === 'object' && rawData !== null) {
+                    comment = rawData;
+                    console.log(`[API] Data at index ${index} for ${pageId} seems pre-parsed.`);
+                } 
+                // Check if it's a string that needs parsing
+                else if (typeof rawData === 'string') {
+                    // Clean the string first: remove potential BOM and trim whitespace
+                    const cleanedStr = rawData.trim().replace(/^﻿/, '');
+                    if (cleanedStr) {
+                         console.log(`[API] Attempting to parse string data at index ${index} for ${pageId}.`);
+                         comment = JSON.parse(cleanedStr);
+                    } else {
+                         console.warn(`[API] Empty string found at index ${index} for pageId ${pageId}.`);
+                         return null; // Skip empty strings
+                    }
+                } 
+                // Handle other unexpected data types
+                else {
+                    console.warn(`[API] Unexpected data type (${typeof rawData}) found at index ${index} for pageId ${pageId}. Data:`, rawData);
+                    return null;
+                }
+
+                // Basic validation: check if it has id AND text AFTER potential parsing/assignment
                 if (!comment || typeof comment.id === 'undefined' || typeof comment.text === 'undefined') {
-                    console.warn(`[API] Parsed comment at index ${index} for pageId ${pageId} lacks essential fields (id, text). Raw:`, cleanedStr);
+                    console.warn(`[API] Processed comment at index ${index} for pageId ${pageId} lacks essential fields (id, text). Raw:`, rawData);
                     return null;
                 }
                 return comment;
+
             } catch (e) {
-                console.error(`[API] Failed to parse potentially cleaned comment JSON at index ${index} for pageId ${pageId}:`, e.message, 'Raw data:', cleanedStr);
+                 // Catch parsing errors specifically for the string case
+                if (typeof rawData === 'string') {
+                     console.error(`[API] Failed to parse comment JSON string at index ${index} for pageId ${pageId}:`, e.message, 'Raw string:', rawData);
+                } else {
+                    // Log error for non-string processing issues if any
+                    console.error(`[API] Error processing data at index ${index} for pageId ${pageId}:`, e.message, 'Raw data:', rawData);
+                }
                 return null;
             }
         }).filter(comment => comment !== null);
-        
-        console.log(`[API] Successfully parsed and validated ${comments.length} comments for ${pageId}`); // Added log for final count
+
+        console.log(`[API] Successfully processed and validated ${comments.length} comments for ${pageId}`); // Log final count
         res.status(200).json(comments);
 
     } catch (error) {
         console.error(`[API] Error in GET /api/comments handler for pageId ${pageId}:`, error);
         res.status(500).json({ message: 'Internal server error fetching comments.' });
     }
-    // --- End of Original KV Logic ---
+    // --- End of Adjusted KV Logic ---
 
     // --- Dummy Data (Removed) ---
     // console.log("--- [SIMPLIFIED TEST] Returning hardcoded dummy comment data --- ");
