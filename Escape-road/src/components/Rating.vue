@@ -143,7 +143,6 @@ watch(() => props.pageId, (newPageId, oldPageId) => {
   display: flex;
   align-items: baseline;
   gap: 5px; /* 减少平均分区域内部间距 */
-  margin-bottom: 8px; /* 减少与下方用户评分区域的间距 */
 }
 
 .average-score {

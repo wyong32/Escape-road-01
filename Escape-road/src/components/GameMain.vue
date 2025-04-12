@@ -191,12 +191,14 @@ onUnmounted(() => {
   width: 100%;
   padding: 20px; /* Increased padding for better spacing */
   background-color: #f0f2f5;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: center; /* Center children horizontally */
   transition: all 0.3s ease; /* Transition all properties */
   position: relative;
   box-sizing: border-box;
+  box-shadow: 0 6px 12px 0 rgb(0 0 0 / 24%);
   /* Removed min-height: 100vh */
 }
 

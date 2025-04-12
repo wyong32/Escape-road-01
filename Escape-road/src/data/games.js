@@ -23,6 +23,7 @@ export const games = {
             <p>Play as a skilled driver fleeing from the police after a bank heist. Navigate crowded streets, dodge buildings, lakes, and trees—one mistake and it’s game over. Police cars will block your path and chase you relentlessly. Stay sharp, react fast, and keep the escape going as long as possible to collect rewards in this fast-paced, addictive game!</p>
             <h4>Collect Money and Gifts in Escape Road!</h4>
             <p>After each thrilling escape road, you'll receive a mystery gift box packed with random cash rewards. Keep an eye on the streets—money can pop up at any time! Don’t miss the chance to grab it, because every dollar brings you closer to unlocking powerful supercars that make your getaway even more unstoppable.</p>
+            <img src="../assets/images/game-01-1.jpg" alt="Escape Road game">
             <h4>Upgrade to New Supercars in Escape Road!</h4>
             <p>To unlock top-tier supercars in Escape Road, you’ll need to stack up in-game cash and try your luck with the Lucky Spin. The game features 90 unique supercars, each with its own special abilities to help you last longer during your high-speed escape. Use your earnings to activate the Lucky Spin and win a random supercar to boost your getaway power!</p>
             <h3>Tips and Tricks to Survive in Escape Road game</h3>
@@ -241,7 +242,7 @@ export const games = {
         keywords: 'Shell Shockers,egg themed ,battle royale FPS game，shell shockers hacks', // 新增关键词
         addressBar: "Shell-Shockers",
         logoText: "Shell-Shockers",
-        image: 'game-10.jfif',
+        image: 'game-10.jpg',
         location: "right",
         iframeUrl: 'https://shellshock.io/',
         showHeader: true,
@@ -386,7 +387,7 @@ export const games = {
         keywords: 'Planet Clicker:Clicker games, interstellar colonization simulations, space strategy games', // 新增关键词
         addressBar: "Planet-Clicker",
         logoText: "Planet Clicker",
-        image: 'game-08.webp',
+        image: 'game-08.jpg',
         location: "right",
         iframeUrl: 'https://turbowarp.org/377874630/embed',
         showHeader: false,
@@ -460,7 +461,7 @@ export const games = {
         keywords: 'house of hazards, unblock house of hazards', // 新增关键词
         addressBar: "House-Of-Hazards",
         logoText: "House Of Hazards",
-        image: 'game-13.webp',
+        image: 'game-13.jpg',
         location: "right",
         iframeUrl: 'https://houseof-hazards.github.io/file/',
         showHeader: false,
@@ -628,7 +629,7 @@ export const games = {
         keywords: 'ragdoll archers,ragdoll archer,ragdoll archers unblocked game online', // 新增关键词
         addressBar: "Ragdoll-Archers",
         logoText: "Ragdoll Archers",
-        image: 'game-16.webp',
+        image: 'game-16.jpg',
         location: "right",
         iframeUrl: 'https://bitlifeonline.github.io/ragdoll-archers/',
         showHeader: false,

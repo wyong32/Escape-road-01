@@ -55,11 +55,11 @@ const allGames = computed(() => {
 .recommend {
     width: 47%; /* 保持宽度 */
     background-color: #ffffff; /* 清爽的白色背景 */
-    border-radius: 12px; /* 更柔和的圆角 */
-    /* border: 1px solid #e0e0e0; */ /* 移除或使用更细的边框 */
+    border-radius: 20px; /* 更柔和的圆角 */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07); /* 添加更自然的阴影 */
     padding: 25px 30px; /* 调整内边距 */
     overflow: hidden;
+    border: 5px solid #00d9ff;
 }
 
 /* 标题样式 */
@@ -99,7 +99,7 @@ const allGames = computed(() => {
     display: block; /* 消除图片底部空隙 */
     width: 100%;
     height: 100%;
-    /* object-fit: cover; */
+    object-fit: cover;
     /* 移除图片圆角，让容器的圆角生效 */
     /* border-radius: 10px; */
     /* 阴影移到父元素 .recommend-item */
@@ -122,10 +122,9 @@ const allGames = computed(() => {
     width: 100%;
     box-sizing: border-box;
     padding-top: 1.5rem; /* 在评论区顶部添加内边距 */
-    border-top: 1px solid #eee; /* 在评论区顶部添加分隔线 */
+    border-top: 1px solid #a0aec0; /* 在评论区顶部添加分隔线 */
     /* 移除评论区自身的背景、边框和阴影，使其融入父容器 */
     background-color: transparent;
-    border: none;
     box-shadow: none;
     border-radius: 0; /* 移除圆角 */
 }

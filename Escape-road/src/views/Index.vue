@@ -189,7 +189,6 @@ console.log('Other games:', allGames.value)
 
 .content-center {
   width: 1200px;
-  box-shadow: 0 6px 12px 0 rgb(0 0 0 / 24%);
   margin: 0 20px;
 }
 
