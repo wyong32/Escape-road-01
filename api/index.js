@@ -1,9 +1,12 @@
+import 'dotenv/config';
 import { kv } from "@vercel/kv"; // 1. Import Vercel KV client
 import cors from "cors";
 import express from "express";
 import rateLimit from "express-rate-limit";
 
 console.log("[API] index.js loaded successfully."); // <-- Updated filename
+console.log("[API] KV_REST_API_URL:", process.env.KV_REST_API_URL);
+console.log("[API] KV_REST_API_TOKEN length:", process.env.KV_REST_API_TOKEN?.length || 0);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
