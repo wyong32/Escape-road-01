@@ -6,7 +6,7 @@ import rateLimit from "express-rate-limit";
 console.log("[API] index.js loaded successfully."); // <-- Updated filename
 
 const app = express();
-// const PORT = process.env.PORT || 3000; // <-- Removed unused constant
+const PORT = process.env.PORT || 3000;
 
 app.set('trust proxy', 1); // Trust first proxy (Vercel)
 
@@ -280,3 +280,7 @@ app.post('/api/ratings', ratingLimiter, async (req, res) => {
 
 // --- Server Export ---
 export default app;
+
+app.listen(PORT, () => {
+    console.log(`[API] Server is running on port ${PORT}`);
+});

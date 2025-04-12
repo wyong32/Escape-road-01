@@ -421,11 +421,6 @@ onUnmounted(() => {
     border-bottom: 1px solid #e0e0e0; /* 保持分隔线 */
 }
 
-/* 调整 controls 的下边距，给 Rating 留出空间 */
-.controls {
-    /* padding-bottom: 15px; */ /* 移除或调整 */
-}
-
 /* 响应式调整 */
 @media (max-width: 768px) { /* 或更小的断点 */
     .top-bar {

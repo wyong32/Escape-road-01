@@ -1,3 +1,10 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+dist-ssr
+
 # Logs
 logs
 *.log
@@ -7,32 +14,32 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-.DS_Store
-dist
-dist-ssr
-coverage
-*.local
-
-/cypress/videos/
-/cypress/screenshots/
-
-# Editor directories and files
+# Editor and OS files
 .vscode/*
 !.vscode/extensions.json
 .idea
+.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-.vercel
+Thumbs.db
 
-# 环境变量 - 防止提交敏感密钥
+# Environment and secrets
 .env*
+.env*.local
+*.local
+
+# Vercel
+.vercel
 
 # Windows 缩略图缓存
 Thumbs.db
 
 # TypeScript build info
 *.tsbuildinfo
+
+# Cypress files
+/cypress/videos/
+/cypress/screenshots/
