@@ -89,13 +89,30 @@ app.get('/api/comments', async (req, res) => {
     }
 
     try {
-        // 使用 Vercel KV 的 LRANGE 命令获取评论列表 (假设评论存储在名为 `comments:${pageId}` 的 List 中)
-        // 0 -1 表示获取所有元素
+        // Fetch comment JSON strings from the list
         const commentsJson = await kv.lrange(`comments:${pageId}`, 0, -1);
-        // Vercel KV 返回的是 JSON 字符串数组，需要解析
-        const comments = commentsJson.map(jsonString => JSON.parse(jsonString));
-        // comments 已经是按插入顺序（最新在前）排列
-        res.json(comments || []); // 如果列表不存在或为空，返回空数组
+        console.log(`[API] Fetched ${commentsJson.length} comment strings for ${pageId}`);
+
+        // Parse JSON strings, handling potential errors
+        const comments = commentsJson.map((commentStr, index) => {
+            try {
+                // Attempt to parse the JSON string
+                const comment = JSON.parse(commentStr);
+                // Basic validation: check if it has an id (or other essential fields)
+                if (!comment || typeof comment.id === 'undefined') {
+                    console.warn(`[API] Parsed comment at index ${index} for pageId ${pageId} lacks essential fields. Raw:`, commentStr);
+                    return null; // Treat as invalid if essential fields missing
+                }
+                return comment;
+            } catch (e) {
+                // Log error if JSON parsing fails
+                console.error(`[API] Failed to parse comment JSON at index ${index} for pageId ${pageId}:`, e.message, 'Raw data:', commentStr);
+                return null; // Return null for invalid entries
+            }
+        }).filter(comment => comment !== null); // Filter out entries that failed parsing or validation
+
+        console.log(`[API] Successfully parsed ${comments.length} comments for ${pageId}`);
+        res.status(200).json(comments);
     } catch (error) {
         console.error('Error fetching comments from Vercel KV:', error);
         res.status(500).json({ message: 'Error fetching comments' });
