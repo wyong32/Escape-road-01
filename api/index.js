@@ -113,16 +113,27 @@ app.get('/api/comments', getLimiter, async (req, res) => {
         console.log(`[API] Fetched ${commentsJson.length} raw comment strings for ${pageId}`); // Added log for raw count
 
         const comments = commentsJson.map((commentStr, index) => {
+            // Clean the string first: remove potential BOM and trim whitespace
+            const cleanedStr = typeof commentStr === 'string' 
+                ? commentStr.trim().replace(/^\uFEFF/, '') 
+                : ''; // Handle non-string values defensively
+            
+            if (!cleanedStr) {
+                 console.warn(`[API] Empty or non-string data found at index ${index} for pageId ${pageId}. Original:`, commentStr);
+                 return null; // Skip empty or non-string entries
+            }
+            
             try {
-                const comment = JSON.parse(commentStr);
+                // Attempt to parse the cleaned JSON string
+                const comment = JSON.parse(cleanedStr);
                 // Basic validation: check if it has id AND text
                 if (!comment || typeof comment.id === 'undefined' || typeof comment.text === 'undefined') {
-                    console.warn(`[API] Parsed comment at index ${index} for pageId ${pageId} lacks essential fields (id, text). Raw:`, commentStr);
+                    console.warn(`[API] Parsed comment at index ${index} for pageId ${pageId} lacks essential fields (id, text). Raw:`, cleanedStr);
                     return null;
                 }
                 return comment;
             } catch (e) {
-                console.error(`[API] Failed to parse comment JSON at index ${index} for pageId ${pageId}:`, e.message, 'Raw data:', commentStr);
+                console.error(`[API] Failed to parse potentially cleaned comment JSON at index ${index} for pageId ${pageId}:`, e.message, 'Raw data:', cleanedStr);
                 return null;
             }
         }).filter(comment => comment !== null);
