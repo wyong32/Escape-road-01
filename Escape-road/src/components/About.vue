@@ -6,7 +6,7 @@
           :class="{ 'is-collapsed': !isExpanded }"
           ref="contentRef"
           :style="contentMaxHeightStyle"
-          v-html="gameData.aboutContent">
+          v-html="processedContent">
         </div>
         <button @click="toggleExpand" class="toggle-button">
             {{ isExpanded ? 'Show less' : 'Show More' }}
@@ -20,6 +20,7 @@
 <script setup>
 import { ref, computed, watch, nextTick } from 'vue'
 import { games } from '../data/games'
+// import GameImage from './GameImage.vue'  // 移除未使用的导入
 // import Comments from './Comments.vue' // 移除导入
 
 const props = defineProps({
@@ -35,6 +36,15 @@ const props = defineProps({
 // 获取当前游戏数据
 const gameData = computed(() => {
   return games[props.gameId] || games.game1
+})
+
+// 处理内容中的图片路径
+const processedContent = computed(() => {
+  if (!gameData.value.aboutContent) return ''
+  return gameData.value.aboutContent.replace(
+    /@\/assets\/images\//g,
+    '/images/'
+  )
 })
 
 // 控制展开/收起的状态
@@ -151,6 +161,14 @@ watch(() => props.gameId, () => {
 .about-content :deep(img) {
     margin-bottom: 15px;
     max-width: 100%;
+}
+
+.about-content :deep(img.game-content-image) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 1rem 0;
+    display: block;
 }
 
 /* 添加手机端样式 */
