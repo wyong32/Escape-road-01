@@ -13,7 +13,7 @@
     "lint:frontend": "cd Escape-road && npm run lint",
     "format:frontend": "cd Escape-road && npm run format",
     "dev:backend": "nodemon api/index.js",
-    "build": "cd Escape-road && npm install && npm run build",
+    "build": "cd Escape-road && npm install && npm run build && cp -r Escape-road/dist .",
     "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\""
   },
   "dependencies": {
