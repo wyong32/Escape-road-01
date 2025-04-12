@@ -147,17 +147,18 @@ app.get('/api/comments', getLimiter, async (req, res) => {
 app.post('/api/comments', commentLimiter, async (req, res) => {
     const { pageId, name, text } = req.body;
 
+    // --- Input Validation (Keep as is) ---
     const pageIdError = validateInput(pageId, 'Page ID');
     if (pageIdError) return res.status(400).json({ message: pageIdError });
     const nameError = validateInput(name, 'Name', 100);
     if (nameError) return res.status(400).json({ message: nameError });
     const textError = validateInput(text, 'Comment', 500);
     if (textError) return res.status(400).json({ message: textError });
+    // --- Validation End ---
 
     console.log(`[API] POST /api/comments received for pageId: ${pageId}`);
 
     const newComment = {
-        // Improved ID: timestamp + random hex string
         id: Date.now().toString() + Math.random().toString(16).slice(2),
         name: name.trim(),
         text: text.trim(),
@@ -165,12 +166,22 @@ app.post('/api/comments', commentLimiter, async (req, res) => {
     };
 
     try {
-        await kv.lpush(`comments:${pageId}`, JSON.stringify(newComment));
+        const commentJsonString = JSON.stringify(newComment);
+        console.log(`--- [WRITE DEBUG] Preparing to LPUSH for ${pageId}. Data:`, commentJsonString); // <-- ADDED: Log data before push
+        
+        // Attempt to push and log the result (new list length)
+        const listLength = await kv.lpush(`comments:${pageId}`, commentJsonString);
+        console.log(`--- [WRITE DEBUG] kv.lpush for ${pageId} completed. New list length: ${listLength}`); // <-- ADDED: Log result of push
+
         // Optional: Trim list if needed
         // await kv.ltrim(`comments:${pageId}`, 0, 99);
+        
         res.status(201).json(newComment);
+        console.log(`--- [WRITE DEBUG] POST /api/comments END (Success) for ${pageId} ---`); // <-- ADDED: Success log
+
     } catch (error) {
         console.error(`[API] Error saving comment for pageId ${pageId}:`, error);
+        console.log(`--- [WRITE DEBUG] POST /api/comments END (Error) for ${pageId} ---`); // <-- ADDED: Error log
         res.status(500).json({ message: 'Internal server error saving comment.' });
     }
 });
