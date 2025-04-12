@@ -98,22 +98,24 @@ const validateInput = (input, type, maxLength = Infinity) => {
 
 // GET /api/comments?pageId=xxx
 app.get('/api/comments', getLimiter, async (req, res) => {
-    console.log("--- [SIMPLIFIED TEST] GET /api/comments invoked --- "); // <-- Log entry
+    // console.log("--- [SIMPLIFIED TEST] GET /api/comments invoked --- "); // Removed test log
     const pageId = req.query.pageId;
-    console.log(`--- [SIMPLIFIED TEST] pageId received: ${pageId} ---`);
+    // console.log(`--- [SIMPLIFIED TEST] pageId received: ${pageId} ---`); // Removed test log
 
     if (!pageId || typeof pageId !== 'string') {
-        console.log("--- [SIMPLIFIED TEST] Invalid pageId, returning 400 ---");
+        // console.log("--- [SIMPLIFIED TEST] Invalid pageId, returning 400 ---"); // Removed test log
         return res.status(400).json({ message: 'Valid pageId query parameter is required.' });
     }
 
-    // --- TEMPORARILY COMMENT OUT KV LOGIC FOR TESTING ---
-    /*
+    // --- Original KV Logic (Restored) ---
     try {
         const commentsJson = await kv.lrange(`comments:${pageId}`, 0, -1);
+        console.log(`[API] Fetched ${commentsJson.length} raw comment strings for ${pageId}`); // Added log for raw count
+
         const comments = commentsJson.map((commentStr, index) => {
             try {
                 const comment = JSON.parse(commentStr);
+                // Basic validation: check if it has id AND text
                 if (!comment || typeof comment.id === 'undefined' || typeof comment.text === 'undefined') {
                     console.warn(`[API] Parsed comment at index ${index} for pageId ${pageId} lacks essential fields (id, text). Raw:`, commentStr);
                     return null;
@@ -124,23 +126,21 @@ app.get('/api/comments', getLimiter, async (req, res) => {
                 return null;
             }
         }).filter(comment => comment !== null);
+        
+        console.log(`[API] Successfully parsed and validated ${comments.length} comments for ${pageId}`); // Added log for final count
         res.status(200).json(comments);
+
     } catch (error) {
-        console.error(`[API] Error fetching comments for pageId ${pageId}:`, error);
+        console.error(`[API] Error in GET /api/comments handler for pageId ${pageId}:`, error);
         res.status(500).json({ message: 'Internal server error fetching comments.' });
     }
-    */
-    // --- END OF TEMPORARILY COMMENTED OUT BLOCK ---
+    // --- End of Original KV Logic ---
 
-    // --- RETURN HARDCODED DUMMY DATA --- 
-    console.log("--- [SIMPLIFIED TEST] Returning hardcoded dummy comment data --- ");
-    const dummyComments = [
-        { id: "dummy1", name: "Test User", text: "This is a hardcoded comment.", timestamp: new Date().toISOString() },
-        { id: "dummy2", name: "Another User", text: "KV logic is bypassed.", timestamp: new Date().toISOString() }
-    ];
-    res.status(200).json(dummyComments);
-    console.log("--- [SIMPLIFIED TEST] Dummy response sent --- ");
-
+    // --- Dummy Data (Removed) ---
+    // console.log("--- [SIMPLIFIED TEST] Returning hardcoded dummy comment data --- ");
+    // const dummyComments = [...];
+    // res.status(200).json(dummyComments);
+    // console.log("--- [SIMPLIFIED TEST] Dummy response sent --- ");
 });
 
 // POST /api/comments (Improved ID generation)
