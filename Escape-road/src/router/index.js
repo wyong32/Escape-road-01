@@ -74,6 +74,17 @@ const router = createRouter({
       component: TermsOfServiceView,
       meta: { title: 'Terms of Service' }
     },
+    {
+      path: '/admin/login',
+      name: 'AdminLogin',
+      component: () => import('../views/admin/Login.vue')
+    },
+    {
+      path: '/admin/dashboard',
+      name: 'AdminDashboard',
+      component: () => import('../views/admin/Dashboard.vue'),
+      meta: { requiresAuth: true }
+    },
     // {
     //   path: '/admin-panel',
     //   name: 'AdminPanel',
@@ -88,6 +99,13 @@ router.beforeEach((to, from, next) => {
     document.title = typeof to.meta.title === 'function' 
       ? to.meta.title(to) 
       : to.meta.title
+  }
+  if (to.meta.requiresAuth) {
+    const token = localStorage.getItem('admin_token')
+    if (!token) {
+      next('/admin/login')
+      return
+    }
   }
   next()
 })

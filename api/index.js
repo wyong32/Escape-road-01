@@ -3,6 +3,13 @@ import { kv } from "@vercel/kv"; // 1. Import Vercel KV client
 import cors from "cors";
 import express from "express";
 import rateLimit from "express-rate-limit";
+import { 
+  adminLogin, 
+  verifyAdminToken, 
+  changeAdminPassword, 
+  getAllComments, 
+  deleteCommentById 
+} from './admin.js'
 
 console.log("[API] index.js loaded successfully."); // <-- Updated filename
 console.log("[API] KV_REST_API_URL:", process.env.KV_REST_API_URL);
@@ -11,31 +18,18 @@ console.log("[API] KV_REST_API_TOKEN length:", process.env.KV_REST_API_TOKEN?.le
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.set('trust proxy', 1); // Trust first proxy (Vercel)
+// 首先设置基本中间件
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// --- CORS Configuration (Improved) ---
-const allowedOrigins = [
-    process.env.NODE_ENV === 'development' ? 'http://localhost:5173' : null, // Allow localhost in dev
-    'https://escape-road-online.com', // Your production frontend URL
-    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null // Allow Vercel preview deployments
-].filter(Boolean); // Filter out null values
-
+// CORS 配置
 const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      console.warn(`CORS blocked origin: ${origin}`); // Log blocked origins
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  origin: ['http://localhost:5173', 'http://localhost:3000'],
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 };
 app.use(cors(corsOptions));
-app.use(express.json()); // Middleware to parse JSON bodies
 
 // --- Rate Limiters (Keep existing logic) ---
 const keyGenerator = (req /*, res */) => {
@@ -214,22 +208,20 @@ app.post('/api/comments', commentLimiter, async (req, res) => {
     };
 
     try {
+        // 确保将评论对象序列化为 JSON 字符串再存储
         const commentJsonString = JSON.stringify(newComment);
-        console.log(`--- [WRITE DEBUG] Preparing to LPUSH for ${pageId}. Data:`, commentJsonString); // <-- ADDED: Log data before push
         
         // Attempt to push and log the result (new list length)
         const listLength = await kv.lpush(`comments:${pageId}`, commentJsonString);
-        console.log(`--- [WRITE DEBUG] kv.lpush for ${pageId} completed. New list length: ${listLength}`); // <-- ADDED: Log result of push
+        console.log(`[API] Comment pushed for ${pageId}. New list length: ${listLength}`); 
 
         // Optional: Trim list if needed
         // await kv.ltrim(`comments:${pageId}`, 0, 99);
         
         res.status(201).json(newComment);
-        console.log(`--- [WRITE DEBUG] POST /api/comments END (Success) for ${pageId} ---`); // <-- ADDED: Success log
 
     } catch (error) {
         console.error(`[API] Error saving comment for pageId ${pageId}:`, error);
-        console.log(`--- [WRITE DEBUG] POST /api/comments END (Error) for ${pageId} ---`); // <-- ADDED: Error log
         res.status(500).json({ message: 'Internal server error saving comment.' });
     }
 });
@@ -276,6 +268,19 @@ app.post('/api/ratings', ratingLimiter, async (req, res) => {
         console.error(`[API] Error submitting rating for pageId ${pageId}:`, error);
         res.status(500).json({ message: 'Internal server error submitting rating.' });
     }
+});
+
+// 管理员登录路由
+app.post('/api/admin/login', adminLogin);
+app.post('/api/admin/change-password', verifyAdminToken, changeAdminPassword);
+
+// 管理员评论管理路由 (受保护)
+app.get('/api/admin/comments', verifyAdminToken, getAllComments);
+app.delete('/api/admin/comments/:pageId/:commentId', verifyAdminToken, deleteCommentById);
+
+// 受保护的管理员路由
+app.get('/api/admin/protected', verifyAdminToken, (req, res) => {
+  res.json({ message: '已通过验证的管理员路由' });
 });
 
 // --- Removed Debug API Endpoint ---
