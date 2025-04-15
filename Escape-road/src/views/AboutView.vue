@@ -3,7 +3,7 @@
     <Headers /> 
     <section class="content-wrap">
       <div class="about-container">
-        <h1>About Us</h1>
+        <h1>About Us Escape Road</h1>
         <p>
             Welcome to our gaming platform! We are committed to providing fun and exciting gaming experiences.
         </p>
